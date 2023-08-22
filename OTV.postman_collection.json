@@ -1,0 +1,1031 @@
+{
+	"info": {
+		"_postman_id": "0f46eed3-44f4-4159-ab89-64eecc0208e8",
+		"name": "OTV",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25721243"
+	},
+	"item": [
+		{
+			"name": "Create Process Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var processId = pm.response.text().split(\"ANTON.CORE.processId = \\\"\")[1].split(\"\\\";\")[0];",
+							"",
+							"pm.environment.set('processId', processId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Upgrade-Insecure-Requests",
+						"value": "1"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Accept",
+						"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "none"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "navigate"
+					},
+					{
+						"key": "Sec-Fetch-User",
+						"value": "?1"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "document"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not/A)Brand\";v=\"99\", \"Google Chrome\";v=\"115\", \"Chromium\";v=\"115\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "host",
+						"value": "otv.verwalt-berlin.de"
+					}
+				],
+				"url": {
+					"raw": "https://otv.verwalt-berlin.de/ams/TerminBuchen/wizardng?dswid=4075&dsrid=490&sprachauswahl=en&mfDirect=true",
+					"protocol": "https",
+					"host": [
+						"otv",
+						"verwalt-berlin",
+						"de"
+					],
+					"path": [
+						"ams",
+						"TerminBuchen",
+						"wizardng"
+					],
+					"query": [
+						{
+							"key": "dswid",
+							"value": "4075"
+						},
+						{
+							"key": "dsrid",
+							"value": "490"
+						},
+						{
+							"key": "sprachauswahl",
+							"value": "en"
+						},
+						{
+							"key": "mfDirect",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Up",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var text = pm.response.text();",
+							"console.log(text);",
+							"if (pm.response.code == 200 && !text.includes(\"<!DOCTYPE html>\") && !text.includes(\"Request Rejected\")) {",
+							"    var errors = pm.response.json().wizardInfo.errors;",
+							"    console.log('Error count:');",
+							"    console.log(errors.count());",
+							"} else {",
+							"    console.log('Error count not possible');",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "bakamsachs",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "bakam",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "host",
+						"value": "otv.verwalt-berlin.de"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not/A)Brand\";v=\"99\", \"Google Chrome\";v=\"115\", \"Chromium\";v=\"115\""
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data; boundary=----WebKitFormBoundaryQ3jj7L7ccVXxlvwU"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest"
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "Besonderheiten",
+							"value": "In-person visit - * For a recognized marriage or registered same-sex civil partnership, the personal interview of both spouses / partners is required.\r\n* In the case of minors, the personal interview of the family (parents with child) is required.|Of majority of both spouses or same sex life partners - Both spouses or same-sex partners must have completed their 18th birthday.|Simple German language skills - The foreign spouse or same-sex partner usually has to have basic German language skills.|Main residence in Berlin - A second home in Berlin is not sufficient."
+						},
+						{
+							"key": "Gebuehrenrahmen",
+							"value": "For the first issuance of the residence permit:\r\n* Adults: 100.00 euros\r\n* Minors: 50.00 euros\r\n* Turkish citizens: a maximum of 37.00 euros\r\nFor the extension of the residence permit:\r\n* Adults: 93.00 euros\r\n* Minors: 46.50 euros\r\n* Turkish citizens: a maximum of 37.00 euros\r\nFree of charge when presenting current proof of receiving benefits according to SGB II or XII or the Asylum Seekers Benefits Act."
+						},
+						{
+							"key": "InfoBarrierefreiheit",
+							"value": "This facility is wheelchair accessible.Handicapped parking space available.A wheelchair-accessible elevator is available.A wheelchair-accessible WC is available."
+						},
+						{
+							"key": "Leistungsbeschreibung",
+							"value": "Issuance or extension of a residence permit for\r\n* *Spouses or life partners of the same sex* of foreign residents with a valid residence title,\r\n* *Under-age, unmarried children* of foreign residents with a valid residence title,\r\n* *Parents* of foreign children with a residence title pursuant to § 23 para. 4, § 25 para. 1, § 25 para. 2 sentence 1, 1st alternative or § 26 para. 3, if no parent with an entitlement to personal care is a resident of the Federal Republic of Germany, and\r\n* *Parents* of foreign children with a permanent settlement permit pursuant to § 26 para. 4, if a residence permit pursuant to § 25 para. 2 s. 1, 2. Alt. had previously been issued *and* if no parent with an entitlement to personal care is a resident of the Federal Republic of Germany\r\n\r\n*Important notes:*\r\n\r\n*1. Your family member has an EU Blue Card?* \r\nThen please choose the service \r\n„Residence permit for spouses and children of holders of an EU Blue Card“ (see section „More information“).\r\n\r\n\r\n*2. Your family member has a residence permit for one of the following purposes:*\r\n* employment as a skilled worker (with academic education or vocational training),\r\n* study, \r\n* in-service training and other educational purposes, \r\n* recognition of foreign professional qualifications, \r\n* visiting scholar or academic staff or\r\n* employment as a teacher?\r\nThen please choose the service\r\n„Residence permit for spouses and children of trainees, students, academics and teachers“ (see section „More information“).\r\n\r\n\r\n*3. Your family member has a residence permit as a person eligible for subsidiary protection?*\r\nThen please choose the service\r\n„Residence permit for spouses, parents and children of persons eligible for subsidiary protection“ “ (see section „More information“).\r\n\r\n\r\nWould you like to apply for a permanent settlement permit? You can find all the information in the section \"More information\"."
+						},
+						{
+							"key": "Leistungsname",
+							"value": "Residence permit for spouses, parents and children of foreign citizens (general)"
+						},
+						{
+							"key": "OEPNVInfo",
+							"value": "S-Bahn: S 41/42 (Westhafen) U-Bahn: U 9 (Amrumer Str.) Bus: 123, 142, M27 "
+						},
+						{
+							"key": "Organisationsname",
+							"value": "\r\n                Berlin Immigration Office, Friedrich-Krause-Ufer\r\n            "
+						},
+						{
+							"key": "TAprozessID",
+							"value": ""
+						},
+						{
+							"key": "accId",
+							"value": ""
+						},
+						{
+							"key": "aggregatedServices",
+							"value": ""
+						},
+						{
+							"key": "angehoeriger_eu_ewr",
+							"value": "144-0"
+						},
+						{
+							"key": "angehoeriger_eu_ewr_hidden_val",
+							"value": "144-0"
+						},
+						{
+							"key": "anliegen_auswahl_andere",
+							"value": ""
+						},
+						{
+							"key": "anliegen_auswahl_deutsch",
+							"value": ""
+						},
+						{
+							"key": "anliegen_nr_hidden",
+							"value": "2"
+						},
+						{
+							"key": "applicationForm:managedForm",
+							"value": "applicationForm:managedForm"
+						},
+						{
+							"key": "applicationForm:managedForm:j_idt314",
+							"value": ""
+						},
+						{
+							"key": "aufhenthaltnr_pflicht",
+							"value": "1"
+						},
+						{
+							"key": "benoetigteUnterlagen",
+							"value": "Form &quot;Antrag auf Erteilung eines Aufenthaltstitels&quot; (filled out) - See the “Forms” section.\r\nPlease fill in one form for each person who wishes to apply for a residence permit (only required for the first application for every member of the family).|Valid passport - A passport must be submitted for each member of the family.|1 current biometric photo of each applicant - 35mm x 45mm, frontal shot with neutral facial expression and closed mouth, looking straight into the camera, light background (https://www.berlin.de/labo/_assets/kraftfahrzeugwesen/foto-mustertafel.pdf)|Family reunion to spouse: marriage certificate - Not required for the extension of the residence permit|Family reunion to same sex civil partner: Partnership certificate - Not required for the extension of the residence permit|Birth certificate for underage children - Not required for the extension of the residence permit|Certificate regarding legal custody - If one parent does not live in Germany. (not required for the extension of the residence permit)|For all foreign documents: translation, possibly with an additional apostil or confirmation of authenticity (issued by a German consular official) - * Please provide an authenticated translation of all foreign documents.\r\n* Depending on your country of origin, you may also need an apostil or confirmation of authenticity (issued by a German consular official) for your document(s). More on the topic in the section \"More information\".|Current certificate of school attendance (not older than 14 days) - For children who are required to attend school|Language certificate - Basically, a language certificate of simple German language skills is to be presented at level A 1 (more in the section \"Further Information\").|All certificates showing participation in the integration (Only in case of extension). - If you were required to attend an integretion course by the Registration Office for Foreigners you have to show all certificates showing participation in the integration course.|Lease - Together with proof of the current rent (e.g. current account statement)|Health insurance - Proof of a secure livelihood must also include sufficient health insurance. Those with statutory health insurance are sufficiently insured. Those with private health insurance must consider the type and extent of their health insurance.\r\nPlease read the leaflet for more information.|Proof of the secured livelihood of the family in the shared household - When calculating the means of livelihood, also those persons are taken into account with whom the foreigner lives in a shared household or for whom the foreigner is obliged to provide a livelihood.\r\nA shared household includes, in particular, couples, both or single parents and unmarried children under 25 years of age all living together in one common household. \r\nTherefore, all family members with their own income in the shared household must submit the following documents of proof in regard to their respective income.\r\n\r\n* *Employees:* Employment contract, current certificate of employment (not older than 14 days), last 6 salary slips, for the extension of the residence permit additionally a certificate on paid contributions or adequate provision for an old-age pension; each original and copy\r\n\r\n* *Self employed:* Audit report form (Prüfungsbericht), prepared by a tax consultant, auditor or lawyer for tax law\r\n\r\n* *Social benefits (also supplementary):* Current proofs of receiving benefits according to SGB II or XII or the Asylum Seekers Benefits Act, child benefit and so on|Proof of main residence in Berlin - * Certificate of registration at the main residence or\r\n* lease and written confirmation of occupancy from the landlord\r\nMore on the topic in the section \"More information\"."
+						},
+						{
+							"key": "clientWizardStep",
+							"value": "Ml9BbmxpZWdlbnNrbMOkcnVuZw=="
+						},
+						{
+							"key": "clusterId",
+							"value": "19"
+						},
+						{
+							"key": "contrydatacsv",
+							"value": "North Macedonia!-144!-nein!-144-0"
+						},
+						{
+							"key": "country998",
+							"value": "0"
+						},
+						{
+							"key": "countrySelected",
+							"value": "1"
+						},
+						{
+							"key": "currentAnliegenszweckid",
+							"value": ""
+						},
+						{
+							"key": "dienstleistung",
+							"value": "305289"
+						},
+						{
+							"key": "dienstleistungName",
+							"value": "Residence permit for spouses, parents and children of foreign citizens (sect. 29-34)"
+						},
+						{
+							"key": "dl_dienstleister",
+							"value": ""
+						},
+						{
+							"key": "dl_dienstleistung_ID",
+							"value": ""
+						},
+						{
+							"key": "dl_dienstleistung_name",
+							"value": ""
+						},
+						{
+							"key": "dl_nr",
+							"value": "24"
+						},
+						{
+							"key": "dl_ort",
+							"value": "Berlin"
+						},
+						{
+							"key": "dl_plz",
+							"value": "13353"
+						},
+						{
+							"key": "dl_response_error",
+							"value": "0"
+						},
+						{
+							"key": "dl_str",
+							"value": "Friedrich-Krause-Ufer"
+						},
+						{
+							"key": "dokumente",
+							"value": ""
+						},
+						{
+							"key": "duldung_pflicht",
+							"value": ""
+						},
+						{
+							"key": "enter_sachgebiet",
+							"value": ""
+						},
+						{
+							"key": "error_code",
+							"value": "i5e5f:hh70350i97did0e908:fh<;:7f99di"
+						},
+						{
+							"key": "fmlyMemNationality",
+							"value": "144-0"
+						},
+						{
+							"key": "frid",
+							"value": "b7801441-f843-4f55-913b-e8a11b808ce5"
+						},
+						{
+							"key": "gestattung_pflicht",
+							"value": ""
+						},
+						{
+							"key": "init_sprachauswahl",
+							"value": ""
+						},
+						{
+							"key": "javax.faces.ClientWindow",
+							"value": "6359"
+						},
+						{
+							"key": "javax.faces.ViewState",
+							"value": "-8875676725679354063:5958485926692296487"
+						},
+						{
+							"key": "lang",
+							"value": "en"
+						},
+						{
+							"key": "lebnBrMitFmly",
+							"value": "1"
+						},
+						{
+							"key": "level1",
+							"value": "144-0-2"
+						},
+						{
+							"key": "level2",
+							"value": "144-0-2-4"
+						},
+						{
+							"key": "level3",
+							"value": "144-0-2-4-305289"
+						},
+						{
+							"key": "nnachnamezmsVal",
+							"value": ""
+						},
+						{
+							"key": "nnamezms",
+							"value": "0"
+						},
+						{
+							"key": "personenAnzahl_mit_dokument",
+							"value": ""
+						},
+						{
+							"key": "personenAnzahl_normal",
+							"value": "1"
+						},
+						{
+							"key": "personenAnzahl_ohne_dokument",
+							"value": ""
+						},
+						{
+							"key": "personen_anzahl_hidden_val",
+							"value": "1"
+						},
+						{
+							"key": "rechtlicheGrundlage",
+							"value": "Aufenthaltsgesetz (AufenthG) Abschnitt 6 - Aufenthalt aus familiären Gründen (https://www.gesetze-im-internet.de/englisch_aufenthg/englisch_aufenthg.html#p0743)"
+						},
+						{
+							"key": "sachgebietName",
+							"value": "Department E 5 +++ House A, 4th floor, waiting room E 5"
+						},
+						{
+							"key": "sammelfeld_konsulat",
+							"value": ""
+						},
+						{
+							"key": "sel_anliegensgruppe",
+							"value": "x"
+						},
+						{
+							"key": "sel_anliegenszweck",
+							"value": ""
+						},
+						{
+							"key": "sel_service",
+							"value": ""
+						},
+						{
+							"key": "sel_staat",
+							"value": "144"
+						},
+						{
+							"key": "sel_staat_hidden_val",
+							"value": "144"
+						},
+						{
+							"key": "selectedService",
+							"value": "144-0-2-4-305289"
+						},
+						{
+							"key": "selectedService",
+							"value": ""
+						},
+						{
+							"key": "serviceValidationElement",
+							"value": "Residence permit for spouses, parents and children of foreign citizens (sect. 29-34)"
+						},
+						{
+							"key": "standortId",
+							"value": "655"
+						},
+						{
+							"key": "standortId1",
+							"value": ""
+						},
+						{
+							"key": "swissSelectedService",
+							"value": ""
+						},
+						{
+							"key": "targetVal",
+							"value": ""
+						},
+						{
+							"key": "xfc-pp-elementslist",
+							"value": "anliegen_auswahl_deutsch,anliegen_auswahl_andere,sammelfeld_konsulat,init_sprachauswahl,contrydatacsv,sel_staat,personenAnzahl_normal,dokumente,personenAnzahl_mit_dokument,personenAnzahl_ohne_dokument,lebnBrMitFmly,fmlyMemNationality,angehoeriger_eu_ewr,sel_anliegensgruppe,sel_anliegenszweck,sel_service,enter_sachgebiet,aggregatedServices,selectedService,swissSelectedService,level1Val,level2Val,level3Val,nnachnamezmsVal,serviceValidationElement,accId,TAprozessID,dienstleistungName,dienstleistung,sachgebietName,clusterId,standortId,standortId1,targetVal,dl_dienstleistung_ID,aufhenthaltnr_pflicht,gestattung_pflicht,duldung_pflicht,dl_dienstleister,dl_dienstleistung_name,InfoBarrierefreiheit,OEPNVInfo,Leistungsname,Leistungsbeschreibung,Gebuehrenrahmen,benoetigteUnterlagen,Besonderheiten,rechtlicheGrundlage,Organisationsname,dl_str,dl_nr,dl_plz,dl_ort,dl_response_error,sel_staat_hidden_val,angehoeriger_eu_ewr_hidden_val,currentAnliegenszweckid,anliegen_nr_hidden,countrySelected,country998,personen_anzahl_hidden_val,selectedService,nnamezms"
+						},
+						{
+							"key": "xfc-pp-elementslist",
+							"value": "anliegen_auswahl_deutsch,anliegen_auswahl_andere,sammelfeld_konsulat,init_sprachauswahl,contrydatacsv,sel_staat,personenAnzahl_normal,dokumente,personenAnzahl_mit_dokument,personenAnzahl_ohne_dokument,lebnBrMitFmly,fmlyMemNationality,angehoeriger_eu_ewr,sel_anliegensgruppe,sel_anliegenszweck,sel_service,enter_sachgebiet,aggregatedServices,selectedService,swissSelectedService,level1Val,level2Val,level3Val,nnachnamezmsVal,serviceValidationElement,accId,TAprozessID,dienstleistungName,dienstleistung,sachgebietName,clusterId,standortId,standortId1,targetVal,dl_dienstleistung_ID,aufhenthaltnr_pflicht,gestattung_pflicht,duldung_pflicht,dl_dienstleister,dl_dienstleistung_name,InfoBarrierefreiheit,OEPNVInfo,Leistungsname,Leistungsbeschreibung,Gebuehrenrahmen,benoetigteUnterlagen,Besonderheiten,rechtlicheGrundlage,Organisationsname,dl_str,dl_nr,dl_plz,dl_ort,dl_response_error,sel_staat_hidden_val,angehoeriger_eu_ewr_hidden_val,currentAnliegenszweckid,anliegen_nr_hidden,countrySelected,country998,personen_anzahl_hidden_val,selectedService,nnamezms"
+						},
+						{
+							"key": "xfc-pp-old-version",
+							"value": "false"
+						},
+						{
+							"key": "xfc-pp-review",
+							"value": "false"
+						},
+						{
+							"key": "xima-9875-required",
+							"value": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "https://otv.verwalt-berlin.de/api/remote2/TerminBuchen/{{processId}}/proceed?dswid=4075&suppressRenderOnChange=true",
+					"protocol": "https",
+					"host": [
+						"otv",
+						"verwalt-berlin",
+						"de"
+					],
+					"path": [
+						"api",
+						"remote2",
+						"TerminBuchen",
+						"{{processId}}",
+						"proceed"
+					],
+					"query": [
+						{
+							"key": "dswid",
+							"value": "4075"
+						},
+						{
+							"key": "suppressRenderOnChange",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find out",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var text = pm.response.text();",
+							"console.log(text);",
+							"if (pm.response.code == 200 && !text.includes(\"<!DOCTYPE html>\") && !text.includes(\"Request Rejected\")) {",
+							"    pm.test(\"Error message exists\", function () {",
+							"        var jsonData = pm.response.json();",
+							"        pm.expect(jsonData.wizardInfo.errors[0].message).to.contain(\"There are currently no dates\");",
+							"    });",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "bakamsachs",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "bakam",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "host",
+						"value": "otv.verwalt-berlin.de"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not/A)Brand\";v=\"99\", \"Google Chrome\";v=\"115\", \"Chromium\";v=\"115\""
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data; boundary=----WebKitFormBoundaryQ3jj7L7ccVXxlvwU"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest"
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "Besonderheiten",
+							"value": "In-person visit - * For a recognized marriage or registered same-sex civil partnership, the personal interview of both spouses / partners is required.\r\n* In the case of minors, the personal interview of the family (parents with child) is required.|Of majority of both spouses or same sex life partners - Both spouses or same-sex partners must have completed their 18th birthday.|Simple German language skills - The foreign spouse or same-sex partner usually has to have basic German language skills.|Main residence in Berlin - A second home in Berlin is not sufficient."
+						},
+						{
+							"key": "Gebuehrenrahmen",
+							"value": "For the first issuance of the residence permit:\r\n* Adults: 100.00 euros\r\n* Minors: 50.00 euros\r\n* Turkish citizens: a maximum of 37.00 euros\r\nFor the extension of the residence permit:\r\n* Adults: 93.00 euros\r\n* Minors: 46.50 euros\r\n* Turkish citizens: a maximum of 37.00 euros\r\nFree of charge when presenting current proof of receiving benefits according to SGB II or XII or the Asylum Seekers Benefits Act."
+						},
+						{
+							"key": "InfoBarrierefreiheit",
+							"value": "This facility is wheelchair accessible.Handicapped parking space available.A wheelchair-accessible elevator is available.A wheelchair-accessible WC is available."
+						},
+						{
+							"key": "Leistungsbeschreibung",
+							"value": "Issuance or extension of a residence permit for\r\n* *Spouses or life partners of the same sex* of foreign residents with a valid residence title,\r\n* *Under-age, unmarried children* of foreign residents with a valid residence title,\r\n* *Parents* of foreign children with a residence title pursuant to § 23 para. 4, § 25 para. 1, § 25 para. 2 sentence 1, 1st alternative or § 26 para. 3, if no parent with an entitlement to personal care is a resident of the Federal Republic of Germany, and\r\n* *Parents* of foreign children with a permanent settlement permit pursuant to § 26 para. 4, if a residence permit pursuant to § 25 para. 2 s. 1, 2. Alt. had previously been issued *and* if no parent with an entitlement to personal care is a resident of the Federal Republic of Germany\r\n\r\n*Important notes:*\r\n\r\n*1. Your family member has an EU Blue Card?* \r\nThen please choose the service \r\n„Residence permit for spouses and children of holders of an EU Blue Card“ (see section „More information“).\r\n\r\n\r\n*2. Your family member has a residence permit for one of the following purposes:*\r\n* employment as a skilled worker (with academic education or vocational training),\r\n* study, \r\n* in-service training and other educational purposes, \r\n* recognition of foreign professional qualifications, \r\n* visiting scholar or academic staff or\r\n* employment as a teacher?\r\nThen please choose the service\r\n„Residence permit for spouses and children of trainees, students, academics and teachers“ (see section „More information“).\r\n\r\n\r\n*3. Your family member has a residence permit as a person eligible for subsidiary protection?*\r\nThen please choose the service\r\n„Residence permit for spouses, parents and children of persons eligible for subsidiary protection“ “ (see section „More information“).\r\n\r\n\r\nWould you like to apply for a permanent settlement permit? You can find all the information in the section \"More information\"."
+						},
+						{
+							"key": "Leistungsname",
+							"value": "Residence permit for spouses, parents and children of foreign citizens (general)"
+						},
+						{
+							"key": "OEPNVInfo",
+							"value": "S-Bahn: S 41/42 (Westhafen) U-Bahn: U 9 (Amrumer Str.) Bus: 123, 142, M27 "
+						},
+						{
+							"key": "Organisationsname",
+							"value": "\r\n                Berlin Immigration Office, Friedrich-Krause-Ufer\r\n            "
+						},
+						{
+							"key": "TAprozessID",
+							"value": ""
+						},
+						{
+							"key": "accId",
+							"value": ""
+						},
+						{
+							"key": "aggregatedServices",
+							"value": ""
+						},
+						{
+							"key": "angehoeriger_eu_ewr",
+							"value": "144-0"
+						},
+						{
+							"key": "angehoeriger_eu_ewr_hidden_val",
+							"value": "144-0"
+						},
+						{
+							"key": "anliegen_auswahl_andere",
+							"value": ""
+						},
+						{
+							"key": "anliegen_auswahl_deutsch",
+							"value": ""
+						},
+						{
+							"key": "anliegen_nr_hidden",
+							"value": "2"
+						},
+						{
+							"key": "applicationForm:managedForm",
+							"value": "applicationForm:managedForm"
+						},
+						{
+							"key": "applicationForm:managedForm:j_idt314",
+							"value": ""
+						},
+						{
+							"key": "aufhenthaltnr_pflicht",
+							"value": "1"
+						},
+						{
+							"key": "benoetigteUnterlagen",
+							"value": "Form &quot;Antrag auf Erteilung eines Aufenthaltstitels&quot; (filled out) - See the “Forms” section.\r\nPlease fill in one form for each person who wishes to apply for a residence permit (only required for the first application for every member of the family).|Valid passport - A passport must be submitted for each member of the family.|1 current biometric photo of each applicant - 35mm x 45mm, frontal shot with neutral facial expression and closed mouth, looking straight into the camera, light background (https://www.berlin.de/labo/_assets/kraftfahrzeugwesen/foto-mustertafel.pdf)|Family reunion to spouse: marriage certificate - Not required for the extension of the residence permit|Family reunion to same sex civil partner: Partnership certificate - Not required for the extension of the residence permit|Birth certificate for underage children - Not required for the extension of the residence permit|Certificate regarding legal custody - If one parent does not live in Germany. (not required for the extension of the residence permit)|For all foreign documents: translation, possibly with an additional apostil or confirmation of authenticity (issued by a German consular official) - * Please provide an authenticated translation of all foreign documents.\r\n* Depending on your country of origin, you may also need an apostil or confirmation of authenticity (issued by a German consular official) for your document(s). More on the topic in the section \"More information\".|Current certificate of school attendance (not older than 14 days) - For children who are required to attend school|Language certificate - Basically, a language certificate of simple German language skills is to be presented at level A 1 (more in the section \"Further Information\").|All certificates showing participation in the integration (Only in case of extension). - If you were required to attend an integretion course by the Registration Office for Foreigners you have to show all certificates showing participation in the integration course.|Lease - Together with proof of the current rent (e.g. current account statement)|Health insurance - Proof of a secure livelihood must also include sufficient health insurance. Those with statutory health insurance are sufficiently insured. Those with private health insurance must consider the type and extent of their health insurance.\r\nPlease read the leaflet for more information.|Proof of the secured livelihood of the family in the shared household - When calculating the means of livelihood, also those persons are taken into account with whom the foreigner lives in a shared household or for whom the foreigner is obliged to provide a livelihood.\r\nA shared household includes, in particular, couples, both or single parents and unmarried children under 25 years of age all living together in one common household. \r\nTherefore, all family members with their own income in the shared household must submit the following documents of proof in regard to their respective income.\r\n\r\n* *Employees:* Employment contract, current certificate of employment (not older than 14 days), last 6 salary slips, for the extension of the residence permit additionally a certificate on paid contributions or adequate provision for an old-age pension; each original and copy\r\n\r\n* *Self employed:* Audit report form (Prüfungsbericht), prepared by a tax consultant, auditor or lawyer for tax law\r\n\r\n* *Social benefits (also supplementary):* Current proofs of receiving benefits according to SGB II or XII or the Asylum Seekers Benefits Act, child benefit and so on|Proof of main residence in Berlin - * Certificate of registration at the main residence or\r\n* lease and written confirmation of occupancy from the landlord\r\nMore on the topic in the section \"More information\"."
+						},
+						{
+							"key": "clientWizardStep",
+							"value": "Ml9BbmxpZWdlbnNrbMOkcnVuZw=="
+						},
+						{
+							"key": "clusterId",
+							"value": "19"
+						},
+						{
+							"key": "contrydatacsv",
+							"value": "North Macedonia!-144!-nein!-144-0"
+						},
+						{
+							"key": "country998",
+							"value": "0"
+						},
+						{
+							"key": "countrySelected",
+							"value": "1"
+						},
+						{
+							"key": "currentAnliegenszweckid",
+							"value": ""
+						},
+						{
+							"key": "dienstleistung",
+							"value": "305289"
+						},
+						{
+							"key": "dienstleistungName",
+							"value": "Residence permit for spouses, parents and children of foreign citizens (sect. 29-34)"
+						},
+						{
+							"key": "dl_dienstleister",
+							"value": ""
+						},
+						{
+							"key": "dl_dienstleistung_ID",
+							"value": ""
+						},
+						{
+							"key": "dl_dienstleistung_name",
+							"value": ""
+						},
+						{
+							"key": "dl_nr",
+							"value": "24"
+						},
+						{
+							"key": "dl_ort",
+							"value": "Berlin"
+						},
+						{
+							"key": "dl_plz",
+							"value": "13353"
+						},
+						{
+							"key": "dl_response_error",
+							"value": "0"
+						},
+						{
+							"key": "dl_str",
+							"value": "Friedrich-Krause-Ufer"
+						},
+						{
+							"key": "dokumente",
+							"value": ""
+						},
+						{
+							"key": "duldung_pflicht",
+							"value": ""
+						},
+						{
+							"key": "enter_sachgebiet",
+							"value": ""
+						},
+						{
+							"key": "error_code",
+							"value": "i5e5f:hh70350i97did0e908:fh<;:7f99di"
+						},
+						{
+							"key": "fmlyMemNationality",
+							"value": "144-0"
+						},
+						{
+							"key": "frid",
+							"value": "b7801441-f843-4f55-913b-e8a11b808ce5"
+						},
+						{
+							"key": "gestattung_pflicht",
+							"value": ""
+						},
+						{
+							"key": "init_sprachauswahl",
+							"value": ""
+						},
+						{
+							"key": "javax.faces.ClientWindow",
+							"value": "6359"
+						},
+						{
+							"key": "javax.faces.ViewState",
+							"value": "-8875676725679354063:5958485926692296487"
+						},
+						{
+							"key": "lang",
+							"value": "en"
+						},
+						{
+							"key": "lebnBrMitFmly",
+							"value": "1"
+						},
+						{
+							"key": "level1",
+							"value": "144-0-2"
+						},
+						{
+							"key": "level2",
+							"value": "144-0-2-4"
+						},
+						{
+							"key": "level3",
+							"value": "144-0-2-4-305289"
+						},
+						{
+							"key": "nnachnamezmsVal",
+							"value": ""
+						},
+						{
+							"key": "nnamezms",
+							"value": "0"
+						},
+						{
+							"key": "personenAnzahl_mit_dokument",
+							"value": ""
+						},
+						{
+							"key": "personenAnzahl_normal",
+							"value": "1"
+						},
+						{
+							"key": "personenAnzahl_ohne_dokument",
+							"value": ""
+						},
+						{
+							"key": "personen_anzahl_hidden_val",
+							"value": "1"
+						},
+						{
+							"key": "rechtlicheGrundlage",
+							"value": "Aufenthaltsgesetz (AufenthG) Abschnitt 6 - Aufenthalt aus familiären Gründen (https://www.gesetze-im-internet.de/englisch_aufenthg/englisch_aufenthg.html#p0743)"
+						},
+						{
+							"key": "sachgebietName",
+							"value": "Department E 5 +++ House A, 4th floor, waiting room E 5"
+						},
+						{
+							"key": "sammelfeld_konsulat",
+							"value": ""
+						},
+						{
+							"key": "sel_anliegensgruppe",
+							"value": "x"
+						},
+						{
+							"key": "sel_anliegenszweck",
+							"value": ""
+						},
+						{
+							"key": "sel_service",
+							"value": ""
+						},
+						{
+							"key": "sel_staat",
+							"value": "144"
+						},
+						{
+							"key": "sel_staat_hidden_val",
+							"value": "144"
+						},
+						{
+							"key": "selectedService",
+							"value": "144-0-2-4-305289"
+						},
+						{
+							"key": "selectedService",
+							"value": ""
+						},
+						{
+							"key": "serviceValidationElement",
+							"value": "Residence permit for spouses, parents and children of foreign citizens (sect. 29-34)"
+						},
+						{
+							"key": "standortId",
+							"value": "655"
+						},
+						{
+							"key": "standortId1",
+							"value": ""
+						},
+						{
+							"key": "swissSelectedService",
+							"value": ""
+						},
+						{
+							"key": "targetVal",
+							"value": ""
+						},
+						{
+							"key": "xfc-pp-elementslist",
+							"value": "anliegen_auswahl_deutsch,anliegen_auswahl_andere,sammelfeld_konsulat,init_sprachauswahl,contrydatacsv,sel_staat,personenAnzahl_normal,dokumente,personenAnzahl_mit_dokument,personenAnzahl_ohne_dokument,lebnBrMitFmly,fmlyMemNationality,angehoeriger_eu_ewr,sel_anliegensgruppe,sel_anliegenszweck,sel_service,enter_sachgebiet,aggregatedServices,selectedService,swissSelectedService,level1Val,level2Val,level3Val,nnachnamezmsVal,serviceValidationElement,accId,TAprozessID,dienstleistungName,dienstleistung,sachgebietName,clusterId,standortId,standortId1,targetVal,dl_dienstleistung_ID,aufhenthaltnr_pflicht,gestattung_pflicht,duldung_pflicht,dl_dienstleister,dl_dienstleistung_name,InfoBarrierefreiheit,OEPNVInfo,Leistungsname,Leistungsbeschreibung,Gebuehrenrahmen,benoetigteUnterlagen,Besonderheiten,rechtlicheGrundlage,Organisationsname,dl_str,dl_nr,dl_plz,dl_ort,dl_response_error,sel_staat_hidden_val,angehoeriger_eu_ewr_hidden_val,currentAnliegenszweckid,anliegen_nr_hidden,countrySelected,country998,personen_anzahl_hidden_val,selectedService,nnamezms"
+						},
+						{
+							"key": "xfc-pp-elementslist",
+							"value": "anliegen_auswahl_deutsch,anliegen_auswahl_andere,sammelfeld_konsulat,init_sprachauswahl,contrydatacsv,sel_staat,personenAnzahl_normal,dokumente,personenAnzahl_mit_dokument,personenAnzahl_ohne_dokument,lebnBrMitFmly,fmlyMemNationality,angehoeriger_eu_ewr,sel_anliegensgruppe,sel_anliegenszweck,sel_service,enter_sachgebiet,aggregatedServices,selectedService,swissSelectedService,level1Val,level2Val,level3Val,nnachnamezmsVal,serviceValidationElement,accId,TAprozessID,dienstleistungName,dienstleistung,sachgebietName,clusterId,standortId,standortId1,targetVal,dl_dienstleistung_ID,aufhenthaltnr_pflicht,gestattung_pflicht,duldung_pflicht,dl_dienstleister,dl_dienstleistung_name,InfoBarrierefreiheit,OEPNVInfo,Leistungsname,Leistungsbeschreibung,Gebuehrenrahmen,benoetigteUnterlagen,Besonderheiten,rechtlicheGrundlage,Organisationsname,dl_str,dl_nr,dl_plz,dl_ort,dl_response_error,sel_staat_hidden_val,angehoeriger_eu_ewr_hidden_val,currentAnliegenszweckid,anliegen_nr_hidden,countrySelected,country998,personen_anzahl_hidden_val,selectedService,nnamezms"
+						},
+						{
+							"key": "xfc-pp-old-version",
+							"value": "false"
+						},
+						{
+							"key": "xfc-pp-review",
+							"value": "false"
+						},
+						{
+							"key": "xima-9875-required",
+							"value": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "https://otv.verwalt-berlin.de/api/remote2/TerminBuchen/{{processId}}/proceed?dswid=4075&suppressRenderOnChange=true",
+					"protocol": "https",
+					"host": [
+						"otv",
+						"verwalt-berlin",
+						"de"
+					],
+					"path": [
+						"api",
+						"remote2",
+						"TerminBuchen",
+						"{{processId}}",
+						"proceed"
+					],
+					"query": [
+						{
+							"key": "dswid",
+							"value": "4075"
+						},
+						{
+							"key": "suppressRenderOnChange",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check slots",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var text = pm.response.text();",
+							"console.log(text);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not/A)Brand\";v=\"99\", \"Google Chrome\";v=\"115\", \"Chromium\";v=\"115\""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/javascript, */*; q=0.01"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest"
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "host",
+						"value": "otv.verwalt-berlin.de"
+					}
+				],
+				"url": {
+					"raw": "https://otv.verwalt-berlin.de/plugin?name=ValidationServlet&processid=${{processId}}&status=datezms&standortId=655",
+					"protocol": "https",
+					"host": [
+						"otv",
+						"verwalt-berlin",
+						"de"
+					],
+					"path": [
+						"plugin"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "ValidationServlet"
+						},
+						{
+							"key": "processid",
+							"value": "${{processId}}"
+						},
+						{
+							"key": "status",
+							"value": "datezms"
+						},
+						{
+							"key": "clusterId",
+							"value": "19",
+							"disabled": true
+						},
+						{
+							"key": "standortId",
+							"value": "655"
+						},
+						{
+							"key": "anzahlterminslots",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
