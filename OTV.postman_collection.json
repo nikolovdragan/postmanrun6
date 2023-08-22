@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0f46eed3-44f4-4159-ab89-64eecc0208e8",
+		"_postman_id": "4e41f073-6926-44e8-8653-2329b01a36a8",
 		"name": "OTV",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25721243"
@@ -525,10 +525,8 @@
 							"var text = pm.response.text();",
 							"console.log(text);",
 							"if (pm.response.code == 200 && !text.includes(\"<!DOCTYPE html>\") && !text.includes(\"Request Rejected\")) {",
-							"    pm.test(\"Error message exists\", function () {",
-							"        var jsonData = pm.response.json();",
-							"        pm.expect(jsonData.wizardInfo.errors[0].message).to.contain(\"There are currently no dates\");",
-							"    });",
+							"    var jsonData = pm.response.json();",
+							"    console.log(jsonData);",
 							"}",
 							""
 						],
@@ -934,6 +932,22 @@
 						"exec": [
 							"var text = pm.response.text();",
 							"console.log(text);",
+							"if (pm.response.code == 200 && !text.includes(\"<!DOCTYPE html>\") && !text.includes(\"Request Rejected\")) {",
+							"    pm.test(\"Dates before december do not exist\", function () {",
+							"        var jsonData = pm.response.json();",
+							"        ",
+							"        console.log(jsonData);",
+							"        jsonData.forEach(function(day){",
+							"            day.value.split(\"|\").forEach(function(date){",
+							"                console.log(date);",
+							"                pm.expect(date.startsWith(\"2023-11\")).to.be.false;",
+							"                pm.expect(date.startsWith(\"2023-10\")).to.be.false;",
+							"                pm.expect(date.startsWith(\"2023-09\")).to.be.false;",
+							"                pm.expect(date.startsWith(\"2023-12-0\")).to.be.false;",
+							"            });",
+							"        });",
+							"    });",
+							"}",
 							""
 						],
 						"type": "text/javascript"
