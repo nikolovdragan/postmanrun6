@@ -14,6 +14,6 @@ jobs:
         with:
           collection: OTV.postman_collection.json
       - name: Notify
-        if: ${{ failure() }}
+        if: ${{ success() }}
         run: |
           curl --location 'https://trigger.esp8266-server.de/api/?id=2859&hash=c0abcd10598f95c63b08571cb9b54a15'
