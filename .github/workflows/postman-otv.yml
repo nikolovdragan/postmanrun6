@@ -16,4 +16,4 @@ jobs:
       - name: Notify
         if: ${{ success() }}
         run: |
-          curl --location 'https://trigger.esp8266-server.de/api/?id=2859&hash=c0abcd10598f95c63b08571cb9b54a15'
+          curl --location 'https://trigger.esp8266-server.de/api/?id=3793&hash=c0abcd10598f95c63b08571cb9b54a15'
