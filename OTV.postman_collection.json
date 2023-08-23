@@ -948,6 +948,7 @@
 							"        var jsonData = pm.response.json();",
 							"        ",
 							"        console.log(jsonData);",
+							"        pm.expect(jsonData.length).to.be.greaterThan(0);",
 							"        jsonData.forEach(function(day){",
 							"            day.value.split(\"|\").forEach(function(date){",
 							"                console.log(date);",
