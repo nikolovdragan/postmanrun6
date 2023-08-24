@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "4e41f073-6926-44e8-8653-2329b01a36a8",
+		"_postman_id": "38a664c1-57d9-4d23-9d48-729772866166",
 		"name": "OTV",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25721243"
+		"_exporter_id": "2546182"
 	},
 	"item": [
 		{
@@ -932,6 +932,11 @@
 						"exec": [
 							"var text = pm.response.text();",
 							"console.log(text);",
+							"",
+							"if (pm.response.code != 200 || !text.includes(\"<!DOCTYPE html>\") || !text.includes(\"Request Rejected\")) {",
+							"    postman.setNextRequest(null);",
+							"} ",
+							"",
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
@@ -944,10 +949,18 @@
 							"    pm.expect(pm.response.text()).to.not.include(\"Request Rejected\");",
 							"});",
 							"",
+							"",
 							"pm.test(\"Dates before december do exist\", function () {",
 							"        var jsonData = pm.response.json();",
 							"        ",
 							"        console.log(jsonData);",
+							"",
+							"        if (jsonData.length > 0) {",
+							"            pm.environment.set('dates', jsonData);",
+							"        } else {",
+							"            postman.setNextRequest(null);",
+							"        }",
+							"",
 							"        pm.expect(jsonData.length).to.be.greaterThan(0);",
 							"        jsonData.forEach(function(day){",
 							"            day.value.split(\"|\").forEach(function(date){",
@@ -957,6 +970,15 @@
 							"            });",
 							"        });",
 							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
 							""
 						],
 						"type": "text/javascript"
@@ -1045,6 +1067,77 @@
 							"value": "1",
 							"disabled": true
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Slack",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var dates = pm.environment.get('dates');",
+							"var newDates = '==============\\n';",
+							"newDates += 'Available dates:\\n';",
+							"dates.split('|').forEach(function(date){",
+							"    var parts = date.split('-');",
+							"    var newDate = '';",
+							"    newDate += parts[2];",
+							"    newDate += '.';",
+							"    newDate += parts[1];",
+							"    newDate += '.';",
+							"    newDate += parts[0];",
+							"",
+							"    newDates += newDate;",
+							"    newDates += '\\n';",
+							"});",
+							"newDates += '==============';",
+							"console.log(newDates);",
+							"pm.environment.set('newDates', newDates);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": \"{{newDates}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://hooks.slack.com/services/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",
+					"protocol": "https",
+					"host": [
+						"hooks",
+						"slack",
+						"com"
+					],
+					"path": [
+						"services",
+						"T04KQDCBQ93",
+						"B05PTS5L801",
+						"df31nIe9EvLUWPPvIGChr6ez"
 					]
 				}
 			},
