@@ -13,6 +13,7 @@ jobs:
       - uses: matt-ball/newman-action@master
         with:
           collection: OTV.postman_collection.json
+          envVar: '[{ "key": "slackUrl", "value": "${{ secrets.SLACK_URL }}" }]'
       - name: Notify
         if: ${{ success() }}
         run: |

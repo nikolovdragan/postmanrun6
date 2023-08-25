@@ -1126,18 +1126,9 @@
 					}
 				},
 				"url": {
-					"raw": "https://hooks.slack.com/services/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",
-					"protocol": "https",
+					"raw": "{{slackUrl}}",
 					"host": [
-						"hooks",
-						"slack",
-						"com"
-					],
-					"path": [
-						"services",
-						"T04KQDCBQ93",
-						"B05PTS5L801",
-						"VIpspwtdev3mItwxQ2maGG05"
+						"{{slackUrl}}"
 					]
 				}
 			},
