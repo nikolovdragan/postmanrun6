@@ -933,7 +933,7 @@
 							"var text = pm.response.text();",
 							"console.log(text);",
 							"",
-							"if (pm.response.code != 200 || !text.includes(\"<!DOCTYPE html>\") || !text.includes(\"Request Rejected\")) {",
+							"if (pm.response.code != 200 || text.includes(\"<!DOCTYPE html>\") || text.includes(\"Request Rejected\")) {",
 							"    postman.setNextRequest(null);",
 							"} ",
 							"",
