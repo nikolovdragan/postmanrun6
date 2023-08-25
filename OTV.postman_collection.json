@@ -1080,12 +1080,15 @@
 					"script": {
 						"exec": [
 							"var dates = pm.environment.get('dates');",
+							"var dates1 = '';",
 							"if (dates == undefined) {",
-							"    dates = '';",
+							"    dates1 = '';",
+							"} else {",
+							"    dates1 = dates;",
 							"}",
 							"var newDates = '==============\\n';",
 							"newDates += 'Available dates:\\n';",
-							"dates.split('|').forEach(function(date){",
+							"dates1.split('|').forEach(function(date){",
 							"    var parts = date.split('-');",
 							"    var newDate = '';",
 							"    newDate += parts[2];",
