@@ -963,7 +963,7 @@
 							"",
 							"        pm.expect(jsonData.length).to.be.greaterThan(0);",
 							"        jsonData.forEach(function(day){",
-							"            pm.environment.set('dates', day);",
+							"            pm.environment.set('dates', day.value);",
 							"            day.value.split(\"|\").forEach(function(date){",
 							"                console.log(date);",
 							"                pm.expect(date.startsWith(\"2023-10\")).to.be.true;",
