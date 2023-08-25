@@ -1086,6 +1086,7 @@
 							"} else {",
 							"    dates1 = dates;",
 							"}",
+							"console.log(typeof dates1)",
 							"var newDates = '==============\\n';",
 							"newDates += 'Available dates:\\n';",
 							"dates1.split('|').forEach(function(date){",
