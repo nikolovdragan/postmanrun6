@@ -967,7 +967,7 @@
 							"            day.value.split(\"|\").forEach(function(date){",
 							"                console.log(date);",
 							"                pm.expect(date.startsWith(\"2023-10\")).to.be.true;",
-							"                pm.expect(date.startsWith(\"2023-09\")).to.be.true;",
+							"                pm.expect(date.startsWith(\"2023-11\")).to.be.true;",
 							"            });",
 							"        });",
 							"});",
