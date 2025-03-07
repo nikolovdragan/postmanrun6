@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@master
       - uses: matt-ball/newman-action@master
         with:
-          collection: OTV.postman_collection.json
+          collection: ZTC.postman_collection.json
           envVar: '[{ "key": "slackUrl", "value": "${{ secrets.SLACK_URL }}" }]'
       - name: Notify
         if: ${{ success() }}
