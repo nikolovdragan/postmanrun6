@@ -1,4 +1,4 @@
-name: API Test Otv 6
+name: API Test Otv
 
 on:
   schedule:
@@ -17,4 +17,5 @@ jobs:
       - name: Notify
         if: ${{ success() }}
         run: |
-          curl --location 'https://trigger.esp8266-server.de/api/?id=3793&hash=c0abcd10598f95c63b08571cb9b54a15'
+          curl --location 'https://trigger.esp8266-server.de/api/?id=2859&hash=c0abcd10598f95c63b08571cb9b54a15'
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"TEST ZTC IS LIVE go to https://www.zewa.net/de/gewinnspiele/gratis-testen/"}' ${{ secrets.SLACK_URL }}
